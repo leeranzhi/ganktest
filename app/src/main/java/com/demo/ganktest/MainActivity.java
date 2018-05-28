@@ -50,11 +50,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        swipeRefresh=(SwipeRefreshLayout)findViewById(R.id.swip_refresh);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        swipeRefresh.setRefreshing(true);
-        Toast.makeText(MainActivity.this,"正在加载...客官请稍等",
+        Toast.makeText(MainActivity.this, "正在加载...客官请稍等",
                 Toast.LENGTH_SHORT).show();
+        swipeRefresh.setRefreshing(true);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -84,30 +85,30 @@ public class MainActivity extends AppCompatActivity {
             loadLocation();
             Log.d(TAG, "准备初始化图片加载.......");
             initMitos();
-            swipeRefresh.setRefreshing(false);
         } else {
             //无缓存时向服务器发送请求
             Log.d(TAG, "准备向服务器发送请求");
             requestMessage();
         }
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MitoAdapter(mitoList);
         recyclerView.setAdapter(adapter);
+        swipeRefresh.setRefreshing(false);
     }
+
     /**
      * 加载本地缓存内容
      */
     private void loadLocation() {
         for (int i = 0; i < mitos.length; i++) {
             String imageUrl = prefs.getString("url" + i, null);
+            String imageName = prefs.getString("name" + i, null);
             Log.d(TAG, "url" + i);
             mitos[i] = new Mito();
-            mitos[i].setName("" + i);
+            mitos[i].setName(imageName);
             mitos[i].setImageUrl(imageUrl);
         }
-        Log.d(TAG, "观察列表长度" + mitoList.size());
     }
 
     /**
@@ -134,16 +135,17 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseMessage = response.body().string();
                 final List<Message> messageList = Utility.handleMessageResponse(responseMessage);
-                final List<String> mitoUrlList = Utility.handleMitoResponse(messageList);
+                final Mito[] mitos = Utility.handleMitoResponse(messageList);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (mitoUrlList != null) {
+                        if (mitos != null) {
                             SharedPreferences.Editor editor = PreferenceManager.
                                     getDefaultSharedPreferences(MainActivity.this).
                                     edit();
-                            for (int i = 0; i < mitoUrlList.size(); i++) {
-                                editor.putString("url" + i, mitoUrlList.get(i));
+                            for (int i = 0; i < mitos.length; i++) {
+                                editor.putString("url" + i, mitos[i].getImageUrl());
+                                editor.putString("name" + i, mitos[i].getName());
                             }
                             editor.apply();
                             loadLocation();
