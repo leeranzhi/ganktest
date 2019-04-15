@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -41,10 +40,11 @@ public class MitoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mito);
+//        Toolbar toolbar=(Toolbar)findViewById(R.id.mito_toolbar);
+//        setSupportActionBar(toolbar);
         Intent intent = getIntent();
         mitoName = intent.getStringExtra(MITO_NAME);
         mitoImageUrl = intent.getStringExtra(MITO_IMAGE_URL);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.mito_toolbar);
         final ImageView mitoImageView = (ImageView) findViewById(R.id.picture);
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
@@ -54,16 +54,17 @@ public class MitoActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+//        Log.d("MitoActivity","观察对象是否为空"+actionBar);
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(MitoActivity.this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED) {
                 requestAlertWindowPermissions();
-            }else{
-                Toast.makeText(this,"长按图片即可保存",
+            } else {
+                Toast.makeText(this, "长按图片即可保存",
                         Toast.LENGTH_LONG).show();
             }
         }
@@ -72,7 +73,7 @@ public class MitoActivity extends AppCompatActivity {
 //        if (actionBar != null) {
 //            actionBar.setDisplayHomeAsUpEnabled(true);
 //        }
-        Glide.with(this).load(mitoImageUrl).into(mitoImageView);
+        Glide.with(this).load(mitoImageUrl).centerCrop().into(mitoImageView);
         //图片长按事件
         mitoImageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -110,7 +111,10 @@ public class MitoActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MitoActivity.this, new String[]
                 {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
     }
-    //
+
+    /**
+     * 权限请求结果回调
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -118,7 +122,7 @@ public class MitoActivity extends AppCompatActivity {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.
                         PERMISSION_GRANTED) {
-                    if(imageBitmap!=null) {
+                    if (imageBitmap != null) {
                         saveImageToGallery(MitoActivity.this, imageBitmap);
                     }
                 } else {
@@ -164,7 +168,8 @@ public class MitoActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
         //最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + appDir)));
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                Uri.parse("file://" + appDir)));
         Toast.makeText(context, "保存成功至" + appDir, Toast.LENGTH_SHORT).show();
 
     }

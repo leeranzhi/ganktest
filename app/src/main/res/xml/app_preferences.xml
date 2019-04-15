@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout="@layout/preference_item"
+    android:title="@string/title_activity_setting">
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="人性化自由选择">
+        <Preference
+            android:defaultValue="false"
+            android:layout="@layout/preference_item"
+            android:summary="当前为不显示"
+            android:title="在通知栏显示图标" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/notify_priority"
+            android:layout="@layout/preference_item"
+            android:summaryOff="当前为最低位置(默认)"
+            android:summaryOn="当前为最高位置"
+            android:title="通知栏处于最高位置" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="感谢有你">
+        <Preference
+            android:layout="@layout/preference_item"
+            android:summary="我的博客：http://leeranzhi.github.io"
+            android:title="作者：leeranzhi"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
