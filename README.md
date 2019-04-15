@@ -9,9 +9,13 @@
 
 1.应用主界面
 
+- 采用RecyclerView+CardView显示图片条目
+- 更换Action为ToolBar,扁平化设计
+
 <div align="center">
-<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175544.jpg" width="30%" height="30%">
+<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175544.jpg" width="50%" height="50%">
 </div>
+
 
 
 
