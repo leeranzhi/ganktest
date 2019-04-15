@@ -13,8 +13,9 @@
 - 更换Action为ToolBar,扁平化设计
 
 <div align="center">
-<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175544.jpg" width="50%" height="50%">
+<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175544.jpg" width="35%" height="35%">
 </div>
+
 
 
 
@@ -26,17 +27,18 @@
 
 
 <div align="center">
-<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175619.jpg" width="30%" height="30%">
+<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175619.jpg" width="35%" height="35%">
 </div>
 
 3.长按显示保存选项
 
 <div align="center">
-<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175625.jpg" width="30%" height="30%">
+<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175625.jpg" width="35%" height="35%">
 </div>
+
 
 4.保存成功显示提示
 
 <div align="center">
-<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175637.jpg" width="30%" height="30%">
+<img src="https://github.com/leeranzhi/ganktest/blob/master/Screenshot/S80608-175637.jpg" width="35%" height="35%">
 </div>
